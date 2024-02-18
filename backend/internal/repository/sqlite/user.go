@@ -28,7 +28,7 @@ func (r *UserSQLite) GetAll() (*[]model.User, error) {
 func (r *UserSQLite) Get(id uint) (*model.User, error) {
 	var user model.User
 
-	if result := r.db.Where("id = ?", id).Preload("LastVisit").First(&user); result.Error == nil {
+	if result := r.db.Where("id = ?", id).Preload("FavoriteTables").First(&user); result.Error == nil {
 		return &user, nil
 	} else if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		return &user, entity.ErrUserNotFound

@@ -141,7 +141,7 @@ func (h *Handler) loginUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) markAsFavorite(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
+	if r.Method == http.MethodGet {
 		authClaims, _ := h.getClaimsFromAuthHeader(r)
 		authUserID, _ := strconv.ParseUint((*authClaims)["sub"], 10, 32)
 

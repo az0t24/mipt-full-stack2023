@@ -127,21 +127,25 @@ func (s *UserService) MarkAsFavorite(id, tableId uint) error {
 		return err
 	}
 
+	isExists := false
 	for i, t := range user.FavoriteTables {
 		if t.ID == tableId {
 			slices.Delete(user.FavoriteTables, i, i)
+			isExists = true
 			break
-		} else if i == len(user.FavoriteTables)-1 {
-			table, err := s.tableRepo.Get(tableId)
-			if err == nil {
-				user.FavoriteTables = append(user.FavoriteTables, *table)
-			} else {
-				return errors.New("table does not exist")
-			}
 		}
 	}
 
-	return nil
+	if !isExists {
+		table, err := s.tableRepo.Get(tableId)
+		if err == nil {
+			user.FavoriteTables = append(user.FavoriteTables, *table)
+		} else {
+			return errors.New("table does not exist")
+		}
+	}
+
+	return s.userRepo.Update(user)
 }
 
 func (s *UserService) GetFavorites(id uint) ([]football.SeasonTable, error) {

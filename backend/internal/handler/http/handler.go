@@ -32,7 +32,7 @@ func (h *Handler) NewRouter() *mux.Router {
 	r.HandleFunc("/user/{user_id}", h.getUserByID).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/user/register", h.registerUser).Methods(http.MethodPost, http.MethodOptions)
 	r.HandleFunc("/user/login", h.loginUser).Methods(http.MethodPost, http.MethodOptions)
-	r.HandleFunc("/user/{user_id}/mark/{table_id}", h.markAsFavorite).Methods(http.MethodPost, http.MethodOptions)
+	r.HandleFunc("/user/{user_id}/mark/{table_id}", h.markAsFavorite).Methods(http.MethodGet, http.MethodOptions)
 	r.HandleFunc("/user/{user_id}/favorites", h.getFavorites).Methods(http.MethodGet, http.MethodOptions)
 
 	r.HandleFunc("/oauth/login", h.loginViaOauth).Methods(http.MethodGet)
